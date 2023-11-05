@@ -9,8 +9,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.io.IOException;
 import java.time.Duration;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -21,8 +21,16 @@ public class OpportunitiesListService {
     
     final private WebDriver driver;
     
-    public List<String> getOpportunities() throws IOException {
-        driver.get("https://aiesec.org/search?earliest_start_date=2023-10-09&programmes=8&regions=1629");
+    public List<String> getOpportunities(String url) {
+        if (url == null) {
+            Calendar calendar = Calendar.getInstance();
+            url = "https://aiesec.org/search?earliest_start_date=%d-%d-%d&programmes=8".formatted(
+                    calendar.get(Calendar.YEAR),
+                    calendar.get(Calendar.MONTH) + 1,
+                    calendar.get(Calendar.DAY_OF_MONTH)
+            );
+        }
+        driver.get(url);
 
         acceptCookies();
         scrollAllTheWayDown();
@@ -33,13 +41,13 @@ public class OpportunitiesListService {
                 .toList();
     }
 
-    private void acceptCookies() throws IOException {
+    private void acceptCookies() {
         Wait<WebDriver> wait = new WebDriverWait(driver, Duration.ofSeconds(60*1000));
         click(driver, "Accept all cookies");
         wait.until(d -> getButton(driver, "Accept all cookies") == null);
     }
 
-    private void scrollAllTheWayDown() throws IOException {
+    private void scrollAllTheWayDown() {
         final AtomicInteger opportunities = new AtomicInteger(-1);
         Wait<WebDriver> wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         while (getButton(driver, "Load more") != null) {
@@ -50,6 +58,10 @@ public class OpportunitiesListService {
                 return newOpportunitiesCount.get() > opportunities.get();
             });
             opportunities.set(newOpportunitiesCount.get());
+
+            try {
+                wait.until(d -> getButton(driver, "Load more") != null);
+            } catch (Exception ignored) {}
         }
     }
 

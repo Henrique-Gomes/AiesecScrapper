@@ -13,9 +13,9 @@ public class AiesecScrapperService {
     final private OpportunitiesListService opportunitiesListService;
     final private OpportunityService opportunityService;
 
-    public void getCSV() throws IOException {
-        List<String> opportunitiesStr = opportunitiesListService.getOpportunities();
-        // System.out.println(opportunityService.scrapOpportunity("https://aiesec.org/opportunity/global-talent/1264148"));
+    public void getCSV(String url) {
+        System.out.println(opportunityService.getTitles());
+        List<String> opportunitiesStr = opportunitiesListService.getOpportunities(url);
         opportunitiesStr.forEach(e -> System.out.println(opportunityService.scrapOpportunity(e)));
     }
 }

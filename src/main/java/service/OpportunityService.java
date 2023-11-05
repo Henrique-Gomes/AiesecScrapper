@@ -28,6 +28,37 @@ public class OpportunityService {
     private final LogisticsService logisticsService;
 
     private final VisaService visaService;
+
+    public Opportunity getTitles() {
+        return new Opportunity(
+                "URL",
+                "Title",
+                "Group",
+                "Place",
+                "Global Talent",
+                "Salary",
+                "Backgrounds",
+                "Languages",
+                "Fee",
+                "Slots",
+                "Description",
+                "Period",
+                "Openings",
+                "Deadline",
+                "About",
+                "Working Hours",
+                "Responsibilities",
+                "Processes",
+                "Skills",
+                "Nationality",
+                "Study",
+                "Provided",
+                "Not Included",
+                "Visa Type",
+                "Visa Link",
+                "Health Insurance"
+        );
+    }
     
     public Opportunity scrapOpportunity(String url) {
         driver.get(url);
@@ -52,7 +83,7 @@ public class OpportunityService {
                 slots.slots(),
                 description(),
                 slots.period(),
-                slots.period(),
+                slots.openings(),
                 slots.deadline(),
                 role.about(),
                 role.workingHours(),
