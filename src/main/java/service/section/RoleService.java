@@ -17,6 +17,7 @@ public class RoleService {
         return new Role(
                 about(),
                 workingHours(),
+                remoteDuration(),
                 responsibilities()
         );
     }
@@ -30,6 +31,14 @@ public class RoleService {
     }
 
     private String responsibilities() {
-        return opportunityRepository.get("#role > div > div:nth-child(4) > div:nth-child(2)");
+        if (opportunityRepository.get("#role > div > div:nth-child(4) > div.font-bold").equals(""))
+            return opportunityRepository.get("#role > div > div:nth-child(4) > div:nth-child(2)");
+        return opportunityRepository.get("#role > div > div:nth-child(5) > div:nth-child(2)");
+    }
+
+    private String remoteDuration() {
+        if (opportunityRepository.get("#role > div > div:nth-child(5) > div.font-bold").equals(""))
+            return opportunityRepository.get("#role > div > div:nth-child(4) > div:nth-child(2)");
+        return "";
     }
 }

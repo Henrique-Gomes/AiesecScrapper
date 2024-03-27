@@ -1,4 +1,4 @@
 package model.section;
 
-public record Role(String about, String workingHours, String responsibilities) {
+public record Role(String about, String workingHours, String remoteDuration, String responsibilities) {
 }

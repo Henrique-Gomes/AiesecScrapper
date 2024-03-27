@@ -2,6 +2,7 @@ package service;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import config.Config;
 import lombok.AllArgsConstructor;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -10,7 +11,6 @@ import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -20,17 +20,11 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class OpportunitiesListService {
     
     final private WebDriver driver;
+
+    final private Config params;
     
-    public List<String> getOpportunities(String url) {
-        if (url == null) {
-            Calendar calendar = Calendar.getInstance();
-            url = "https://aiesec.org/search?earliest_start_date=%d-%d-%d&programmes=8".formatted(
-                    calendar.get(Calendar.YEAR),
-                    calendar.get(Calendar.MONTH) + 1,
-                    calendar.get(Calendar.DAY_OF_MONTH)
-            );
-        }
-        driver.get(url);
+    public List<String> getOpportunities() {
+        driver.get(params.getUrl());
 
         acceptCookies();
         scrollAllTheWayDown();
