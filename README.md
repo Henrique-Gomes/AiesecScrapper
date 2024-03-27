@@ -1,4 +1,6 @@
-Java 17 required
+# AIESEC Scrapper
+
+Java 17, Chrome and compatible [ChromeDriver](https://chromedriver.chromium.org/downloads) required.
 
 Executing the application:
 ```
@@ -20,3 +22,10 @@ Linux / MacOS (requires Maven):
 ```
 mvn package
 ```
+
+## TODO:
+* parallelism
+	* Load opportunities while loading list
+	* Load multiple opportunities at once
+	* Load multiple properties of the same opportunity at once
+* Headless
